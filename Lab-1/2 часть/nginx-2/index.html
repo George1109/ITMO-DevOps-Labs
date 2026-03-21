@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>System Breach</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-top: 20%;
+            animation: flicker 0.1s infinite;
+        }
+
+        p {
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
+        .warning {
+            color: red;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+<h1>⚠ SYSTEM BREACHED ⚠</h1>
+<p>Доступ к вашим данным получен...</p>
+<p>Идёт копирование файлов...</p>
+
+<p class="warning">НЕ ПЫТАЙТЕСЬ ЗАКРЫТЬ ЭТУ СТРАНИЦУ</p>
+
+<div class="footer">
+    created by ChatGPT 👁
+</div>
+
+<script>
+    // имитация "набора текста"
+    const messages = [
+        "Подключение к серверу...",
+        "Доступ получен",
+        "Скачивание паролей...",
+        "Отправка данных..."
+    ];
+
+    let i = 0;
+
+    function addMessage() {
+        if (i < messages.length) {
+            let p = document.createElement("p");
+            p.textContent = messages[i];
+            document.body.appendChild(p);
+            i++;
+            setTimeout(addMessage, 1500);
+        }
+    }
+
+    setTimeout(addMessage, 2000);
+
+    // звук (если пользователь разрешит)
+    document.body.addEventListener("click", () => {
+        let audio = new Audio("https://www.soundjay.com/button/beep-07.wav");
+        audio.loop = true;
+        audio.play();
+    });
+</script>
+
+</body>
+</html>
