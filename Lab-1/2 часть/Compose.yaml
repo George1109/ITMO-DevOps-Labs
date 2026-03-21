@@ -1,0 +1,64 @@
+services:
+  web1:
+    image: wordpress
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: usr1
+      WORDPRESS_DB_PASSWORD: "qwerty1234"
+      WORDPRESS_DB_NAME: webs-db
+    networks:
+      - net1
+
+  web2:
+    build: ./nginx
+    ports:
+      - 8083:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./nginx-logs:/var/log/nginx
+    networks:
+      - net1
+
+  web3:
+    image: nginx
+    ports:
+      - 8085:80
+    volumes:
+      - ./nginx-2:/usr/share/nginx/html
+    networks:
+      - net2
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "qwerty-root"
+      MYSQL_DATABASE: webs-db
+      MYSQL_USER: usr1
+      MYSQL_PASSWORD: "qwerty1234"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./nginx-logs:/var/log/app_ip_logs
+    networks:
+      - net1
+      - net2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+networks:
+  net1:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+  net2:
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24

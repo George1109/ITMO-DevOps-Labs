@@ -1,0 +1,10 @@
+FROM nginx:alpine
+RUN addgroup -S webuser && adduser -S usr1 -G webuser
+
+RUN touch /var/run/nginx.pid && \
+    chown -R usr1:webuser /var/cache/nginx /var/log/nginx /etc/nginx /var/run/nginx.pid
+
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+USER usr1
+
