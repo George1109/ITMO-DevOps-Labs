@@ -80,16 +80,16 @@ minikube service nginx-service -p <Имя_Кластера>
 
 ## Примеры работы
 
-![Part-1 working site](Lab-2/pic/site-1.png)
+![Part-1 working site](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/site-1.png)
 
-![Part-1 working site 2](Lab-2/pic/site-2.png)
+![Part-1 working site 2](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/site-2.png)
 
-![Part-1 Lens Overview](Lab-2/pic/overview-Lens-3.png)
+![Part-1 Lens Overview](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/overview-Lens-3.png)
 
-![Part-1 Lens Deployment](Lab-2/pic/deployment-Lens-4.png)
+![Part-1 Lens Deployment](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/deployment-Lens-4.png)
 
-![Part-1 Lens Service](Lab-2/pic/service-Lens-5.png)
+![Part-1 Lens Service](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/service-Lens-5.png)
 
-![Part-2 Chart Start](Lab-2/pic/Chart-start-6.png)
+![Part-2 Chart Start](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/Chart-start-6.png)
 
-![Part-2 Helm Start](Lab-2/pic/Helm-site-6.png)
+![Part-2 Helm Start](https://github.com/George1109/ITMO-DevOps-Labs/blob/919ed83e24c871a35f2bbb7319dc770df78c3313/Lab-2/pic/Helm-site-6.png)
