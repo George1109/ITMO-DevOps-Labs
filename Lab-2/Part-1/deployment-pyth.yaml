@@ -1,0 +1,35 @@
+# Запускаем контейнеры которые принимают запрос с nginx и выполняют скрипт на пайтон
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Инфа о деплойменте
+  name: deployment-pyhon
+  labels:
+    app: web-counter
+spec:
+  replicas: 5
+  selector: # Наблюдаем за:
+    matchLabels:
+      app: web-counter
+  template: # Создаём шаблон
+    metadata: # о шаблоне
+      labels:
+        app: web-counter
+    spec:
+      containers: # Настройки создаваемых контейнеров
+      - name: python-container
+        image: python:3.9-slim
+        command: ["/bin/sh", "-c"] # Команда, выполняемая внутри контейнера(запускаем оболочку)
+        args: # относится к комманд: что сделать после ввода команды
+          - pip install flask redis && python /app/app.py
+        env: # переменные окружения
+        - name: REDIS-HOST #имя по которому python найдет адрес в redis-service
+          value: "redis-service"
+        - name: REDIS-PORT # имя по которому python найдет порт
+          value: "7777"
+        volumeMounts: # монтируем волюм в контейнер
+        - name: code-volume
+          mountPath: /app
+      volumes: # инициализируем волюм вне контейнера
+      - name: code-volume # как зовут волюм
+        configMap: # куда волюм ведёт
+          name: python-app-config

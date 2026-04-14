@@ -1,0 +1,15 @@
+# Сервис — показывает к каким подам нужно подключаться
+# Он нужен, потому что поды умирают и возрождаются, а доступ к ним нужен всегда
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service
+  labels:
+    app: web-counter
+spec:
+  selector: # Действует на:
+    app: web-counter # аппки с меткой web-counter
+  ports: # Указываем протокол соединения и порты
+  - protocol: TCP
+    port: 8888 # Порт, по которому можно подключиться к сервису
+    targetPort: 80 # Порт, который слушает сам сервис

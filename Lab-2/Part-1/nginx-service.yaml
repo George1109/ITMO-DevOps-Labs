@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort # Заставляем перейти на нужный порт (LoadBalancer не сработал)
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80       # Порт, который мы откроем снаружи
+      targetPort: 80 # Порт, который слушает Nginx внутри пода
+      nodePort: 32000 # Порт на котором всё будет открываться на localhost

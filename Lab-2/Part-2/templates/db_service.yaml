@@ -1,0 +1,15 @@
+# Сервис для подключения дата базы 
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db_app.service.name }}
+  labels:
+    app: {{ .Values.db_app.labels }}
+spec:
+  selector:
+    app: {{ .Values.db_app.labels }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.db_app.service.port }}
+    targetPort: {{ .Values.db_app.service.targetPort }}
+

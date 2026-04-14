@@ -1,0 +1,14 @@
+# Сервис для подключения дата базы 
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: data-base
+spec:
+  selector: # ищем: 
+    app: data-base # все поды с меткой дата база
+  ports: # портируем
+  - protocol: TCP
+    port: 7777 # к какому порту подключаться (порт сервиса)
+    targetPort: 6379 # какой порт соединяет ( порт контейнера с дата базой)
