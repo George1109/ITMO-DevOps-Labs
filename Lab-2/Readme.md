@@ -36,11 +36,6 @@ cd Part-1
 kubectl apply -f .
 ```
 
-- Проверьте статусы подов
-``` Bash
-kubectl apply -f .
-```
-
 - Запуск сайта
 ``` Bash 
 minikube service nginx-service -p <Имя_Кластера>
