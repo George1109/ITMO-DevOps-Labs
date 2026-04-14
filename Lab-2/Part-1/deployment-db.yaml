@@ -1,0 +1,23 @@
+# Деплоймент для 2 контейнеров с образами СУБД редис
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: data-base
+spec:
+  replicas: 1
+  selector:  # Наблюдать за: (мониторинг всех портов с лейблом data-base
+    matchLabels:
+      app: data-base
+  template: # Создаём шаблон
+    metadata:
+      labels:
+        app: data-base # присваиваем лейбл data-base чтобы за контейнером наблюдали
+    spec:
+      containers:
+        - name: redis
+          image: redis:8.6.2-alpine3.23
+          ports:
+            - containerPort: 6379 # Сам redis работает с портом 6379
+

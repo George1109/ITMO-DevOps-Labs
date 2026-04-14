@@ -1,0 +1,43 @@
+#Настройка переменных для чарта
+python_app:
+  replicaCount: 3
+  labels: web-counter
+  container:
+    name: pyth-app
+    image: python:3.9-slim
+    args: "pip install flask redis && python /app/app.py"
+    env:
+      serviceValue: redis-service
+      servicePort: 7777
+  service:
+    name: pyth-service
+    selectApp: web-counter
+    port: 8888
+    targetPort: 80
+
+db_app:
+  replicaCount: 1
+  labels: data-base
+  container:
+    name: db-redis
+    image: redis:8.6.2-alpine3.23
+    port: 6379
+  service:
+    name: redis-service
+    selectApp: data-base
+    port: 7777
+    targetPort: 6379
+
+nginx_app:
+  replicaCount: 5
+  labels: nginx
+  container:
+    name: nginx-app
+    image: nginx:alpine-slim
+  service:
+    type: NodePort
+    name: nginx-service
+    selectApp: nginx
+    port: 80
+    targetPort: 80
+    nodePort: 32000

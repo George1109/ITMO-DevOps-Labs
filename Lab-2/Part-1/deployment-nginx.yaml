@@ -1,0 +1,27 @@
+# Деплоймент файл для поднятия nginx контейнеров, которые будут отправлять значение о входе на пайтон сервис
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 5
+  selector: # Смотрим:
+    matchLabels: # Если кто-то с этой меткой умрет надо принимать действия
+      app:  nginx
+  template: # Создаём шаблон
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes: # Описываем волюмы в контейнерах
+      - name: nginx-configs
+        configMap:
+          name: nginx-config
+      containers: # создаем контейнеры по образцу
+      - name: nginx-container
+        image: nginx:alpine-slim
+        volumeMounts: # вводим в контейнер волюм
+        - name: nginx-configs # Имя волюма вне контейнера
+          mountPath: /etc/nginx/conf.d # Путь внутри контейнера
