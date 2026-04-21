@@ -1,0 +1,19 @@
+FROM nginx:stable-alpine3.23-perl
+
+RUN apk add --no-cache openssl
+
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/server.key \
+    -out /etc/nginx/ssl/server.crt \
+    -subj "/C=RU/ST=State/L=City/O=Organization/OU=Unit/CN=localhost"
+
+COPY /nginx_settings/nginx.conf /etc/nginx/nginx.conf
+COPY /nginx_settings/site1/index.html /usr/share/nginx/html/site1/index.html
+COPY /nginx_settings/site2/index.html /usr/share/nginx/html/site2/index.html
+COPY /nginx_settings/share/ /usr/share/nginx/common/
+RUN chmod -R 755 /usr/share/nginx/common
+# /usr/share/nginx/html - index.html
+# /etc/nginx - nginx.conf
+EXPOSE 80
+EXPOSE 443

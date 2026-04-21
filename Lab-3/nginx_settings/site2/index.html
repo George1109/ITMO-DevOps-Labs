@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site2</title>
+    <style>
+        /* Мы добавили стили прямо сюда, чтобы всё заработало мгновенно */
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;    /* Центрирует по горизонтали */
+            justify-content: center; /* Центрирует по вертикали */
+            min-height: 100vh;      /* Растягивает на всю высоту экрана */
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;      /* Дополнительная страховка центрирования */
+            max-width: 100%;        /* Чтобы не вылезала за экран */
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Добро пожаловать</h1>
+        </header>
+
+        <main>
+            <img src="/shared-img/soda_exe.jpeg" alt="My-pic">
+        </main>
+
+        <footer>
+            <p>&copy; 2026</p>
+        </footer>
+    </div>
+
+</body>
+</html>
