@@ -17,8 +17,8 @@ build_and_deploy:
   tags:
     - saas-linux-small-amd64
   script:
-    - docker build -t weather-logic ./weather
-    - docker build -t telegram-bot ./Bot
+    - docker build -t weather-logic ./Lab-4/weather
+    - docker build -t telegram-bot ./Lab-4/Bot
     - echo "Deploying . . . "
     - export TELEGRAM_TOKEN="123456789:AAE-VERY-BAD-SECRET-DO-NOT-DO-THIS"
     - echo "Используем токен $TELEGRAM_TOKEN для запуска..."
