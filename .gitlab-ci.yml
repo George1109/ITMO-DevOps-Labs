@@ -24,4 +24,4 @@ build_and_deploy:
     - echo "Используем токен $TELEGRAM_TOKEN для запуска..."
     # Эмуляция запуска через compose
     - cd Lab-4
-    - docker compose up -d
+    - docker compose -f Compose.yaml up -d
