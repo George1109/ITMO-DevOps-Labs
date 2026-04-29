@@ -23,4 +23,5 @@ build_and_deploy:
     - export TELEGRAM_TOKEN="123456789:AAE-VERY-BAD-SECRET-DO-NOT-DO-THIS"
     - echo "Используем токен $TELEGRAM_TOKEN для запуска..."
     # Эмуляция запуска через compose
+    - cd Lab-4
     - docker compose up -d
