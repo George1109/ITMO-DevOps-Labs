@@ -1,0 +1,16 @@
+services:
+  weather-logic:
+    build:
+      context: ./weather
+    expose:
+      - "5000"
+    restart: always
+
+  telegram-bot:
+    build:
+      context: ./Bot
+    depends_on:
+      - weather-logic
+    environment:
+      - TELEGRAM_TOKEN=8658316765:AAEkwdJ8wax7Yj2zDn7hvKRJOWPrij0JvBo
+    restart: always
