@@ -1,0 +1,5 @@
+[allowlist]
+    description = "Allow specific files or tokens"
+    paths = [
+        "Lab-4/HashiCorp_Vault/.*" # Игнорировать папку с конфигами вольта (для лабы)
+    ]
