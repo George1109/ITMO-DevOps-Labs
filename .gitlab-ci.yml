@@ -7,31 +7,30 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
-  # Ссылки на твои будущие образы в реестре GitLab
   BOT_IMAGE: $CI_REGISTRY_IMAGE/bot:$CI_COMMIT_REF_SLUG
   WEATHER_IMAGE: $CI_REGISTRY_IMAGE/weather:$CI_COMMIT_REF_SLUG
 
-# 1. Этап Линтинга
+# 1. Линтинг (теперь смотрим внутрь Lab-4)
 lint-code:
   stage: lint
-  image: python:3.13-slim
+  image: python:3.10-slim
   script:
     - pip install flake8
-    - flake8 Bot/ weather/ --exclude=venv,migrations
+    - flake8 Lab-4/Bot/ Lab-4/weather/ --exclude=venv,migrations --max-line-length=127
 
-# 2. Этап Безопасности
+# 2. Безопасность
 secret-scan:
   stage: security
   image: 
     name: zricethezav/gitleaks:latest
     entrypoint: [""]
   script:
-    - gitleaks detect --verbose --source .
+    - gitleaks detect --verbose --source Lab-4/
 
-# 3. Этап Тестирования (с временным Vault)
+# 3. Тесты
 run-tests:
   stage: test
-  image: python:3.13-slim
+  image: python:3.10-slim
   services:
     - name: hashicorp/vault:latest
       alias: vault
@@ -39,11 +38,10 @@ run-tests:
   variables:
     VAULT_ADDR: "http://vault:8200"
   script:
-    - pip install -r Bot/requirements.txt hvac pytest
-    - python -m pytest Bot/tests/  # Путь к твоим тестам
-  # Это позволяет тестам видеть "сервис" vault по сети GitLab
+    - pip install -r Lab-4/Bot/requirements.txt hvac pytest
+    - python -m pytest Lab-4/Bot/
 
-# 4. Этап Сборки и Пуша в Registry
+# 4. Сборка (указываем правильные пути к Dockerfile)
 build-images:
   stage: build
   image: docker:24.0.5
@@ -52,17 +50,16 @@ build-images:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build -t $BOT_IMAGE -f Bot/Dockerfile .
-    - docker build -t $WEATHER_IMAGE -f weather/Dockerfile .
+    - docker build -t $BOT_IMAGE -f Lab-4/Bot/Dockerfile Lab-4/
+    - docker build -t $WEATHER_IMAGE -f Lab-4/weather/Dockerfile Lab-4/
     - docker push $BOT_IMAGE
     - docker push $WEATHER_IMAGE
   only:
     - main
 
-# 5. Этап Очистки
+# 5. Очистка
 clean-up:
   stage: cleanup
   script:
-    - echo "Cleaning up temporary build artifacts..."
-    - rm -rf .cache/
+    - echo "Cleaning up..."
   when: always
