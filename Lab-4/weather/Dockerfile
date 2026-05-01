@@ -7,13 +7,15 @@ WORKDIR /app
 # 3. Копируем зависимости
 # В этом сервисе они тяжелее (Pandas весит прилично), 
 # поэтому кеширование здесь особенно важно.
-COPY requirements.txt .
+COPY weather/requirements.txt .
 
 # 4. Устанавливаем библиотеки
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Копируем весь код (Flask-приложение и логику)
-COPY . .
+# Копируем файл конфигурации из папки Bot (или корня, если он там)
+COPY Bot/config.py . 
+# Копируем код сервиса погоды
+COPY weather/ . 
 
 # 6. Подсказываем Docker, что наш сервис работает на 5000 порту
 EXPOSE 5000

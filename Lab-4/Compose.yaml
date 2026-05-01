@@ -1,16 +1,43 @@
 services:
+  # Переименовал в vault для краткости и соответствия твоим переменным
+  vault: 
+    image: hashicorp/vault:latest
+    container_name: vault
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=root
+      - VAULT_ADDR=http://0.0.0.0:8200
+    volumes:
+      - ./HashiCorp_Vault/vault/secrets:/vault/secrets
+      - ./HashiCorp_Vault/vault/config:/vault/config
+    entrypoint: ["vault", "server", "-config=/vault/config/vault_Config.hcl"]
+    restart: always
+
   weather-logic:
     build:
-      context: ./weather
+      context: .
+      dockerfile: weather/Dockerfile
+    environment:
+      - VAULT_ADDR=http://vault:8200 # Теперь совпадает с именем сервиса выше
+      - VAULT_ROLE_ID=${VAULT_ROLE_ID}
+      - VAULT_SECRET_ID=${VAULT_SECRET_ID}
     expose:
       - "5000"
+    depends_on:
+      - vault
     restart: always
 
   telegram-bot:
     build:
-      context: ./Bot
+      context: . # Контекст — корень, чтобы видеть config.py
+      dockerfile: Bot/Dockerfile
     depends_on:
       - weather-logic
+      - vault
     environment:
-      - TELEGRAM_TOKEN=8658316765:AAEkwdJ8wax7Yj2zDn7hvKRJOWPrij0JvBo
+      - VAULT_ADDR=http://vault:8200
+      - VAULT_ROLE_ID=${VAULT_ROLE_ID}
+      - VAULT_SECRET_ID=${VAULT_SECRET_ID}
+      - WEATHER_SERVICE_URL=http://weather-logic:5000/weather
     restart: always

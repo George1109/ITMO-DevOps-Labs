@@ -4,3 +4,4 @@ pandas
 requests-cache
 retry-requests
 requests
+hvac
