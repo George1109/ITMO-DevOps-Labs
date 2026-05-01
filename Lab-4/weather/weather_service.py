@@ -21,6 +21,7 @@ cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
 retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
 
+
 # Функция подключения погоды
 def get_weather_data(address):
     # Запрос идет к юрл:
@@ -116,6 +117,7 @@ def get_weather_data(address):
         "daily_forecast": daily_df.to_dict(orient='records')
     }
 
+
 # Декоратор Фласк — регистрирует функцию /weather для гет запроса
 @app.route('/weather', methods=['GET'])
 def weather_api():
@@ -131,6 +133,7 @@ def weather_api():
         return jsonify({"error": "Location not found"}), 404
 
     return jsonify(data)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
