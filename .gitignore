@@ -3,4 +3,4 @@
 # Но не игнорируем файл .gitkeep внутри неё 
 !**/data/.gitkeep
 #Игнорируем файлы типа ADDPLS.md
-**/ADDPLS.md
+**/ADDPLS.mdLab-4/.env
