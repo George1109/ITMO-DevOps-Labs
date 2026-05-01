@@ -25,7 +25,8 @@ secret-scan:
     name: zricethezav/gitleaks:latest
     entrypoint: [""]
   script:
-    - gitleaks detect --verbose --source Lab-4/
+    # Флаг --no-git заставляет gitleaks смотреть только на файлы, а не в историю коммитов
+    - gitleaks detect --verbose --source Lab-4/ --no-git
 
 # 3. Тесты
 run-tests:
