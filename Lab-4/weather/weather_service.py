@@ -10,7 +10,7 @@ from config import config
 # Создаём экземпляр веб приложения
 app = Flask(__name__)
 
-#Берём секреты из хранилища
+# Берём секреты из хранилища
 WEATHER_KEY = config.get('weather_api')
 GEO_KEY = config.get('geo_api')
 # Глобальная настройка клиента
@@ -23,12 +23,11 @@ openmeteo = openmeteo_requests.Client(session=retry_session)
 
 # Функция подключения погоды
 def get_weather_data(address):
-    # Адрес -> Координаты
     # Запрос идет к юрл:
-    # "q": address - поисковой запрос/формат/лимит
-    # Указываем кто отправляет запрос
     geo_url = GEO_KEY
+    # "q": address - поисковой запрос/формат/лимит
     params = {"q": address, "format": "json", "limit": 1}
+    # Указываем кто отправляет запрос
     headers = {"User-Agent": "WeatherBotApp/1.0"}
 
     # Выполняется гет запрос по параметрам
@@ -91,7 +90,6 @@ def get_weather_data(address):
     hourly_slice = actual_forecast.head(8).copy()
     hourly_slice['display_time'] = hourly_slice['date'].dt.strftime('%H:%M')
 
-
     # Обработка ежедневных данных (на неделю)
     # То же что и в почасовом
     daily = response.Daily()
@@ -115,7 +113,7 @@ def get_weather_data(address):
     return {
         "city": address,
         "hourly_forecast": hourly_slice.to_dict(orient='records'),
-    "daily_forecast": daily_df.to_dict(orient='records')
+        "daily_forecast": daily_df.to_dict(orient='records')
     }
 
 # Декоратор Фласк — регистрирует функцию /weather для гет запроса
@@ -133,7 +131,6 @@ def weather_api():
         return jsonify({"error": "Location not found"}), 404
 
     return jsonify(data)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

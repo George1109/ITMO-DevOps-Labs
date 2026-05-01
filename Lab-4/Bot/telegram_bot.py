@@ -41,7 +41,8 @@ def send_instructions(message):
         "• Область\n"
         "• Страна\n"
         "• Почтовый индекс\n"
-        "Все параметры являются необязательными, вам следует использовать только те, которые относятся к адресу, который вы хотите запросить"
+        "Все параметры являются необязательными, вам следует использовать только те,"
+        " которые относятся к адресу, который вы хотите запросить"
     )
     # Обычная кнопка только для вызова инструкции
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -57,7 +58,8 @@ def instruction_button(message):
 
 @bot.message_handler(func=lambda message: True)
 def handle_city_input(message):
-    if message.text.startswith('/'): return
+    if message.text.startswith('/'):
+        return
 
     city = message.text
     # Просто спрашиваем, какой прогноз нужен для этого города
@@ -108,7 +110,7 @@ def callback_query(call):
         else:
             bot.answer_callback_query(call.id, "❌ Город не найден")
 
-    except Exception as e:
+    except Exception:
         bot.answer_callback_query(call.id, "🔥 Ошибка сервиса")
 
 

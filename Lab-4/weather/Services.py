@@ -1,4 +1,3 @@
-import openmeteo_requests
 import pandas as pd
 import requests
 import datetime
@@ -24,7 +23,7 @@ class WeatherService:
         return float(geo_data[0]["lat"]), float(geo_data[0]["lon"])
 
     def fetch_raw_weather(self, lat, lon):
-        #Зона 2: Запрос к Open-Meteo (API Fetching)
+        # Зона 2: Запрос к Open-Meteo (API Fetching)
         params = {
             "latitude": lat,
             "longitude": lon,
@@ -36,7 +35,7 @@ class WeatherService:
         return responses[0]
 
     def process_forecast(self, response, address):
-        #Зона 3: Мозг (Pandas & Formatting)
+        # Зона 3: Мозг (Pandas & Formatting)
         utc_offset = response.UtcOffsetSeconds()
         local_now = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=utc_offset)
 
