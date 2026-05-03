@@ -14,13 +14,11 @@ def get_secrets():
         client.auth.approle.login(role_id=role_id, secret_id=secret_id)
 
         # Чтение секрета через KV v2
-        # mount_point — это ровно то, что было в 'vault secrets list'
         response = client.secrets.kv.v2.read_secret_version(
             mount_point='secret/weather-app/config',
             path='secrets'
         )
 
-        # В KV v2 данные всегда лежат в ['data']['data']
         return response['data']['data']
 
     except Exception as e:

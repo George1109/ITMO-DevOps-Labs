@@ -4,6 +4,7 @@
 !**/data/.gitkeep
 #Игнорируем файлы типа ADDPLS.md
 **/ADDPLS.mdLab-4/.env
+Lab-4/HashiCorp_Vault/info.txt
 
 # Системные файлы macOS
 **/.DS_Store

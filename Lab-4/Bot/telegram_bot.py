@@ -2,11 +2,9 @@ import telebot
 import requests
 import os
 from telebot import types
-# ИМПОРТИРУЕМ НАШ КОНФИГ
 from config import config
 
-# ВАЖНО: берем токен из словаря, который вернул Vault
-# Ключ 'telegram_id' мы видели в твоем успешном тесте
+
 TOKEN = config.get("telegram_id")
 WEATHER_SERVICE_URL = os.getenv("WEATHER_SERVICE_URL", "http://weather-logic:5000/weather")
 
@@ -17,11 +15,9 @@ if not TOKEN:
 bot = telebot.TeleBot(TOKEN)
 
 
-# Функция для создания Inline-кнопок (они крепятся к сообщению)
+# Функция для создания Inline-кнопок
 def get_inline_menu(city):
     markup = types.InlineKeyboardMarkup()
-    # В callback_data зашиваем и тип прогноза, и название города через ":"
-    # Это позволит боту узнать город, когда кнопка будет нажата
     btn_hourly = types.InlineKeyboardButton("⏳ Почасовой", callback_data=f"wh:{city}")
     btn_daily = types.InlineKeyboardButton("📅 На неделю", callback_data=f"wd:{city}")
     markup.add(btn_hourly, btn_daily)
@@ -44,7 +40,6 @@ def send_instructions(message):
         "Все параметры являются необязательными, вам следует использовать только те,"
         " которые относятся к адресу, который вы хотите запросить"
     )
-    # Обычная кнопка только для вызова инструкции
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(types.KeyboardButton("📖 Инструкция"))
 
@@ -62,7 +57,6 @@ def handle_city_input(message):
         return
 
     city = message.text
-    # Просто спрашиваем, какой прогноз нужен для этого города
     bot.send_message(
         message.chat.id,
         f"📍 Город: **{city.upper()}**\nВыберите тип прогноза:",
@@ -73,7 +67,6 @@ def handle_city_input(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    # Разбираем callback_data (например, "wh:Moscow")
     forecast_type, city = call.data.split(':')
 
     try:
