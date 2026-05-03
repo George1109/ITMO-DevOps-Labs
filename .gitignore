@@ -4,3 +4,27 @@
 !**/data/.gitkeep
 #Игнорируем файлы типа ADDPLS.md
 **/ADDPLS.mdLab-4/.env
+
+# Системные файлы macOS
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Файлы конфигурации IDE (VS Code, PyCharm и т.д.)
+.idea/
+.vscode/
+*.swp
+
+# Логи и временные файлы
+*.log
+__pycache__/
+*.py[cod]
+
+# Секреты (HashiCorp Vault, .env)
+.env
+.vault-token
+
+# Папки зависимостей (если есть)
+node_modules/
+venv/
+.venv/

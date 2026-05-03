@@ -10,7 +10,7 @@ variables:
   BOT_IMAGE: $CI_REGISTRY_IMAGE/bot:$CI_COMMIT_REF_SLUG
   WEATHER_IMAGE: $CI_REGISTRY_IMAGE/weather:$CI_COMMIT_REF_SLUG
 
-# 1. Линтинг (теперь смотрим внутрь Lab-4)
+# 1. Линтинг
 lint-code:
   stage: lint
   image: python:3.10-slim
@@ -42,7 +42,7 @@ run-tests:
     - pip install -r Lab-4/Bot/requirements.txt hvac pytest
     - python -m pytest Lab-4/Bot/
 
-# 4. Сборка (указываем правильные пути к Dockerfile)
+# 4. Сборка 
 build-images:
   stage: build
   image: docker:24.0.5
