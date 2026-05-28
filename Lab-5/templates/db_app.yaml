@@ -1,0 +1,22 @@
+# Создаём шаблон под дата базу
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db_app.container.name }}
+  labels:
+    app: {{ .Values.db_app.labels }}
+spec:
+  replicas: {{ .Values.db_app.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db_app.labels }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db_app.labels }}
+    spec:
+      containers:
+        - name: {{ .Values.db_app.container.name }}
+          image: {{ .Values.db_app.container.image }}
+          ports:
+            - containerPort: {{ .Values.db_app.container.port }}

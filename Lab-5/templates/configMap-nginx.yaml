@@ -1,0 +1,14 @@
+# Конфиги для подов — инструкции — что поды будут делать после запуска
+# Конфиг для перенаправления запроса на сервис
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server{ # Конфиг, который воспринимается как текст
+      listen 80; # Слушай порт 80 ( порт nginx )
+      location / { # всё что находится в /:
+        proxy_pass http://{{ .Values.python_app.service.name }}:{{ .Values.python_app.service.port }}; # пересылай на python-service ( Имя сервиса ): Порт
+      }
+    }

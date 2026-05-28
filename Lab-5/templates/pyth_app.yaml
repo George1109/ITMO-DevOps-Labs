@@ -1,0 +1,34 @@
+# Запускаем контейнеры которые принимают запрос с nginx и выполняют скрипт на пайтон
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.python_app.container.name }}
+  labels:
+    app: {{ .Values.python_app.labels }}
+spec:
+  replicas: {{ .Values.python_app.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.python_app.labels }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.python_app.labels }}
+    spec:
+      containers:
+      - name: {{ .Values.python_app.container.name }}
+        image: {{ .Values.python_app.container.image }}
+        command: ["/bin/sh", "-c"]
+        args: [ {{ .Values.python_app.container.args | quote }} ]
+        env:
+        - name: REDIS-HOST
+          value: {{ .Values.python_app.container.env.serviceValue | quote }}
+        - name: REDIS-PORT
+          value: {{ .Values.python_app.container.env.servicePort | quote }}
+        volumeMounts:
+        - name: code-volume
+          mountPath: /app
+      volumes:
+      - name: code-volume
+        configMap:
+          name: python-app-config

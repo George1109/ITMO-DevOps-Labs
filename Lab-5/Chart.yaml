@@ -1,0 +1,7 @@
+#Создаём чарт под приложение
+apiVersion: v2
+name: web-counter
+description: My first helm chart
+type: application
+version: 0.0.1
+appVersion: "0.0.1"
